@@ -1,0 +1,74 @@
+﻿@model SalesModel.DomainClasses.Customer
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Customer</legend>
+
+        @Html.HiddenFor(model => model.CustomerId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfBirth)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateOfBirth)
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+
+  <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+                <div> @Html.ActionLink("New Order", "Create","Order", new { customerId=Model.CustomerId },null)
+                    </div>
+<table width="300" class="table table-bordered">
+    <thead>
+        <tr>
+            <th >Date</th>
+            <th>Source</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td width="100">@String.Format("{0:d}",@item.OrderDate)</td>
+            <td width="100">@item.OrderSource </td>
+            <td > @Html.ActionLink("Edit", "Edit","Order", new { id=item.OrderId,customerId=item.CustomerId },null)</td>
+        </tr>
+    }
+</table>
+
+<br/>
+<br/>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
